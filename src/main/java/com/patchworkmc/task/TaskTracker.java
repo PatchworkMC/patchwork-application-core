@@ -23,8 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.patchworkmc.logging.Logger;
-import com.patchworkmc.util.IThrowingConsumer;
-import com.patchworkmc.util.IThrowingRunnable;
+import com.patchworkmc.util.ThrowingConsumer;
+import com.patchworkmc.util.ThrowingRunnable;
 
 // Please note, this is class is heavily synchronized with a lot of
 // separated blocks. This design decision has been made to minimize
@@ -40,8 +40,8 @@ public class TaskTracker {
 	 * Helper class storing callbacks an their associated {@link TaskTracker}.
 	 */
 	static class TaskTrackerListener {
-		private final IThrowingRunnable<Throwable> onSuccess;
-		private final IThrowingConsumer<Throwable, Throwable> onFail;
+		private final ThrowingRunnable<Throwable> onSuccess;
+		private final ThrowingConsumer<Throwable, Throwable> onFail;
 		private final TaskTracker newTracker;
 
 		/**
@@ -54,8 +54,8 @@ public class TaskTracker {
 		 * @param newTracker The tracker to execute these callbacks on
 		 */
 		TaskTrackerListener(
-				IThrowingRunnable<Throwable> onSuccess,
-				IThrowingConsumer<Throwable, Throwable> onFail,
+				ThrowingRunnable<Throwable> onSuccess,
+				ThrowingConsumer<Throwable, Throwable> onFail,
 				TaskTracker newTracker
 		) {
 			this.onSuccess = onSuccess;
@@ -200,7 +200,7 @@ public class TaskTracker {
 					// If the callback is not null, schedule it
 					scheduler.schedule(
 							new UniversalRunnableTask("SuccessListener",
-									(IThrowingRunnable<Throwable>) () -> listener.onFail.accept(error)),
+									(ThrowingRunnable<Throwable>) () -> listener.onFail.accept(error)),
 							listener.newTracker);
 					// Succeed the dummy task, it will be up to the callback
 					// to fail if the chain should be failed further
@@ -281,7 +281,7 @@ public class TaskTracker {
 	 * @param listener The listener to execute when this tracker completed
 	 * @return The new tracker of the operation, it is armed already
 	 */
-	public TaskTracker then(IThrowingRunnable<Throwable> listener) {
+	public TaskTracker then(ThrowingRunnable<Throwable> listener) {
 		return then(listener, false);
 	}
 
@@ -294,7 +294,7 @@ public class TaskTracker {
 	 * @param noArm    If true, the returned tracker will not be armed
 	 * @return The new tracker of the operation, armed already when noArm is false
 	 */
-	public TaskTracker then(IThrowingRunnable<Throwable> listener, boolean noArm) {
+	public TaskTracker then(ThrowingRunnable<Throwable> listener, boolean noArm) {
 		TaskTracker tracker = new TaskTracker(scheduler);
 		tracker.track(dummyTask);
 
@@ -327,7 +327,7 @@ public class TaskTracker {
 	 * @param listener The listener to execute when this tracker failed
 	 * @return The new tracker of the operation, it is armed already
 	 */
-	public TaskTracker except(IThrowingConsumer<Throwable, Throwable> listener) {
+	public TaskTracker except(ThrowingConsumer<Throwable, Throwable> listener) {
 		return except(listener, false);
 	}
 
@@ -340,7 +340,7 @@ public class TaskTracker {
 	 * @param noArm    If true, the returned tracker will not be armed
 	 * @return The new tracker of the operation, armed already when noArm is false
 	 */
-	public TaskTracker except(IThrowingConsumer<Throwable, Throwable> listener, boolean noArm) {
+	public TaskTracker except(ThrowingConsumer<Throwable, Throwable> listener, boolean noArm) {
 		TaskTracker tracker = new TaskTracker(scheduler);
 		tracker.track(dummyTask);
 

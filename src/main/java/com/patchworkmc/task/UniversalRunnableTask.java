@@ -20,14 +20,14 @@
 package com.patchworkmc.task;
 
 import com.patchworkmc.logging.Logger;
-import com.patchworkmc.util.IThrowingRunnable;
+import com.patchworkmc.util.ThrowingRunnable;
 
 /**
- * {@link Task} for {@link Runnable}s and {@link IThrowingRunnable}s.
+ * {@link Task} for {@link Runnable}s and {@link ThrowingRunnable}s.
  */
 public class UniversalRunnableTask extends Task {
 	private final String name;
-	private final IThrowingRunnable<Throwable> runnable;
+	private final ThrowingRunnable<Throwable> runnable;
 
 	/**
 	 * Creates a new {@link UniversalRunnableTask} with the specified name and runnable.
@@ -35,7 +35,7 @@ public class UniversalRunnableTask extends Task {
 	 * @param name     The name of the task
 	 * @param runnable The runnable to run as the task itself
 	 */
-	public UniversalRunnableTask(String name, IThrowingRunnable<Throwable> runnable) {
+	public UniversalRunnableTask(String name, ThrowingRunnable<Throwable> runnable) {
 		this.name = name;
 		this.runnable = runnable;
 	}

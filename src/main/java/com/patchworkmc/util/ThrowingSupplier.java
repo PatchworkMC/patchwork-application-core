@@ -27,7 +27,7 @@ package com.patchworkmc.util;
  * @param <E> The error type that may occur while yielding a value
  */
 @FunctionalInterface
-public interface IThrowingSupplier<T, E extends Throwable> {
+public interface ThrowingSupplier<T, E extends Throwable> {
 	/**
 	 * Requests a value from the supplier.
 	 *

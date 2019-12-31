@@ -29,7 +29,7 @@ import com.patchworkmc.json.JsonConverter;
 import com.patchworkmc.json.JsonConverterException;
 import com.patchworkmc.network.http.HttpClient;
 import com.patchworkmc.network.http.HttpException;
-import com.patchworkmc.util.IThrowingSupplier;
+import com.patchworkmc.util.ThrowingSupplier;
 
 /**
  * Represents a Http post request.
@@ -37,7 +37,7 @@ import com.patchworkmc.util.IThrowingSupplier;
 public class HttpPostRequest extends HttpRequest<HttpPostRequest> {
 	// Since we defer exceptions, store a function for retrieving
 	// the actual body which may throw a HttpException
-	private IThrowingSupplier<String, HttpException> body;
+	private ThrowingSupplier<String, HttpException> body;
 
 	/**
 	 * Creates a new {@link HttpPostRequest}.
