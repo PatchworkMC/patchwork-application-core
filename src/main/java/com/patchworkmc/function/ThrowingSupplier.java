@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package com.patchworkmc.util;
+package com.patchworkmc.function;
 
 /**
  * Rough reimplementation of {@link java.util.function.Supplier}. This does not try to provide a 100% replacement,

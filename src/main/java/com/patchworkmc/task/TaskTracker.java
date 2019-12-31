@@ -23,8 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.patchworkmc.logging.Logger;
-import com.patchworkmc.util.ThrowingConsumer;
-import com.patchworkmc.util.ThrowingRunnable;
+import com.patchworkmc.function.ThrowingConsumer;
+import com.patchworkmc.function.ThrowingRunnable;
 
 // Please note, this is class is heavily synchronized with a lot of
 // separated blocks. This design decision has been made to minimize

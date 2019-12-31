@@ -29,7 +29,7 @@ import com.patchworkmc.json.JsonConverter;
 import com.patchworkmc.json.JsonConverterException;
 import com.patchworkmc.network.http.HttpClient;
 import com.patchworkmc.network.http.HttpException;
-import com.patchworkmc.util.ThrowingSupplier;
+import com.patchworkmc.function.ThrowingSupplier;
 
 /**
  * Represents a Http post request.

@@ -20,7 +20,7 @@
 package com.patchworkmc.task;
 
 import com.patchworkmc.logging.Logger;
-import com.patchworkmc.util.ThrowingRunnable;
+import com.patchworkmc.function.ThrowingRunnable;
 
 /**
  * {@link Task} for {@link Runnable}s and {@link ThrowingRunnable}s.

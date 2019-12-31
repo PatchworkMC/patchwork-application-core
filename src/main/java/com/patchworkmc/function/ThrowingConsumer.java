@@ -17,20 +17,22 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package com.patchworkmc.util;
+package com.patchworkmc.function;
 
 /**
- * Rough reimplementation of {@link Runnable}. This does not try to provide a 100% replacement,
+ * Rough reimplementation of {@link java.util.function.Consumer}. This does not try to provide a 100% replacement,
  * it is just used in tasks.
  *
- * @param <E> The error type that may occur while running
+ * @param <T> The type this consumer accepts
+ * @param <E> The error type that may occur while accepting a value
  */
 @FunctionalInterface
-public interface ThrowingRunnable<E extends Throwable> {
+public interface ThrowingConsumer<T, E extends Throwable> {
 	/**
-	 * Runs the runnable.
+	 * Sends a value to the consumer.
 	 *
-	 * @throws E If the runnable throws
+	 * @param t The value to send
+	 * @throws E If the consumer throws
 	 */
-	void run() throws E;
+	void accept(T t) throws E;
 }
