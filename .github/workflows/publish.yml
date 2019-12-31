@@ -12,13 +12,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+        name: Checkout repo
       - uses: actions/setup-java@v1
+        name: Setup java 8
         with:
           java-version: 8
       - uses: eskatos/gradle-command-action@v1
+        name: Build with gradle
         with:
-          arguments: remapJar
+          arguments: build
       - uses: ncipollo/release-action@v1.4.0
+        name: Release on github
         with:
           artifacts: ./build/libs/patchwork-application-core-*.jar
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -26,9 +30,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+        name: Checkout repo
       - uses: actions/setup-java@v1
+        name: Setup java 8
         with:
           java-version: 8
       - uses: eskatos/gradle-command-action@v1
+        name: Upload to bintray
         with:
           arguments: bintrayUpload
