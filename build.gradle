@@ -1,0 +1,100 @@
+plugins {
+	id 'java-library'
+	id 'checkstyle'
+	id 'maven-publish'
+	id 'com.jfrog.bintray' version '1.8.4'
+	id 'net.minecrell.licenser' version '0.4.1'
+}
+
+group 'com.patchworkmc'
+version '0.1.0'
+archivesBaseName = "patchwork-application-core"
+
+sourceCompatibility = 1.8
+
+def ENV = System.getenv()
+if (ENV.BUILD_NUMBER) {
+	version = version + "." + "${ENV.BUILD_NUMBER}"
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	api 'org.fusesource.jansi:jansi:1.18'
+	api 'com.fasterxml.jackson.core:jackson-core:2.10.0.pr3'
+	api 'com.fasterxml.jackson.core:jackson-annotations:2.10.0.pr3'
+	api 'com.fasterxml.jackson.core:jackson-databind:2.10.0.pr3'
+}
+
+checkstyle {
+	configFile = rootProject.file("checkstyle.xml")
+	toolVersion = '8.25'
+}
+
+license {
+	header rootProject.file('LICENSE_HEADER')
+	include '**/*.java'
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = "UTF-8"
+}
+
+java {
+	withSourcesJar()
+	withJavadocJar()
+}
+
+jar.dependsOn checkstyleMain
+
+javadoc {
+	options {
+		memberLevel = "PACKAGE"
+	}
+
+	classpath = sourceSets.main.compileClasspath
+}
+
+bintray {
+	user = project.hasProperty('bintrayUser') ? project.getProperty('bintrayUser') : System.getenv('bintray_user')
+	key = project.hasProperty('bintrayKey') ? project.getProperty('bintrayKey') : System.getenv('bintray_key')
+	publish = true
+	override = true
+	publications = ['mavenJava']
+
+	pkg {
+		repo = project.bintrayRepo
+		name = project.name
+		user = bintray.user
+		userOrg = project.repoOwner
+		licenses = [project.codeLicense]
+		desc = project.description
+		websiteUrl = "https://github.com/${project.repoOwner}/${project.repoName}"
+		issueTrackerUrl = "https://github.com/${project.repoOwner}/${project.repoName}/issues"
+		vcsUrl = "https://github.com/${project.repoOwner}/${project.repoName}.git"
+		publicDownloadNumbers = true
+
+		githubRepo = "${project.repoOwner}/${project.repoName}"
+		version {
+			name = project.version
+			released = new Date()
+		}
+	}
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
+
+	repositories {
+		maven {
+			name 'patchwork'
+			url 'https://dl.bintray.com/patchworkmc/Patchwork-Maven/'
+		}
+	}
+}
