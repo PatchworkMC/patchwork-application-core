@@ -201,7 +201,7 @@ public class TaskScheduler {
 	 * @return tracker
 	 */
 	public TaskTracker schedule(Task t, TaskTracker tracker) {
-		schedule(t, null, false);
+		schedule(t, tracker, false);
 		return tracker;
 	}
 
